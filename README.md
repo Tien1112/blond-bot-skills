@@ -1,8 +1,10 @@
-# The Blond Bot — Complete Skills Setup
+# The Blond Bot — Skills Repository
 
-Full skill configuration for The Blond Bot Paperclip workspaces. This repo contains the 5 custom company skills plus install instructions for all 42 external GitHub skills used in the workspace (53 total, 6 Paperclip system skills excluded).
+All skills used by The Blond Bot Paperclip workspaces, synced from the local workspace. This repo contains 48 skills (6 custom company skills + 42 external skills cached locally).
 
-## Custom Company Skills (in this repo)
+## Skills (48 total)
+
+### Custom Company Skills
 
 | Skill | Directory | Description |
 |---|---|---|
@@ -13,82 +15,50 @@ Full skill configuration for The Blond Bot Paperclip workspaces. This repo conta
 | The Blond Bot Voice | `the-blond-bot-voice/` | Brand voice guidelines |
 | Browser Playwright | `browser-playwright/` | Browser automation via Playwright |
 
-## External GitHub Skills (install from source repos)
+### Marketing Skills (from coreyhaines31/marketingskills)
 
-These 42 skills come from public GitHub repos. Install them in any new workspace:
+ab-test-setup, ad-creative, ai-seo, analytics-tracking, aso-audit, churn-prevention, cold-email, community-marketing, competitor-alternatives, content-strategy, copy-editing, copywriting, customer-research, email-sequence, form-cro, free-tool-strategy, launch-strategy, lead-magnets, marketing-ideas, marketing-psychology, onboarding-cro, page-cro, paid-ads, paywall-upgrade-cro, popup-cro, pricing-strategy, product-marketing-context, programmatic-seo, referral-program, revops, sales-enablement, schema-markup, seo-audit, signup-flow-cro, site-architecture, social-content
 
-### Marketing Skills (36 skills)
-**Source:** `https://github.com/coreyhaines31/marketingskills`
+### Other External Skills
 
-Skills: ab-test-setup, ad-creative, ai-seo, analytics-tracking, aso-audit, churn-prevention, cold-email, community-marketing, competitor-alternatives, content-strategy, copy-editing, copywriting, customer-research, email-sequence, form-cro, free-tool-strategy, launch-strategy, lead-magnets, marketing-ideas, marketing-psychology, onboarding-cro, page-cro, paid-ads, paywall-upgrade-cro, popup-cro, pricing-strategy, product-marketing-context, programmatic-seo, referral-program, revops, sales-enablement, schema-markup, seo-audit, signup-flow-cro, site-architecture, social-content
-
-### Other Skills (6 skills)
-
-| Skill | Source repo |
+| Skill | Original source |
 |---|---|
-| brainstorming | `https://github.com/obra/superpowers` |
-| find-skills | `https://github.com/vercel-labs/skills` |
-| frontend-design | `https://github.com/anthropics/skills` |
-| persona-hr-coordinator | `https://github.com/googleworkspace/cli` |
-| remotion-best-practices | `https://github.com/remotion-dev/skills` |
-| web-design-guidelines | `https://github.com/vercel-labs/agent-skills` |
+| brainstorming | obra/superpowers |
+| find-skills | vercel-labs/skills |
+| frontend-design | anthropics/skills |
+| persona-hr-coordinator | googleworkspace/cli |
+| remotion-best-practices | remotion-dev/skills |
+| web-design-guidelines | vercel-labs/agent-skills |
 
 ---
 
-## Full Workspace Setup Guide
+## Setup Guide
 
-### Step 1: Import custom skills from this repo
-
-```bash
-curl -sS -X POST "$PAPERCLIP_API_URL/api/companies/$PAPERCLIP_COMPANY_ID/skills/import" \
-  -H "Authorization: Bearer $PAPERCLIP_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{"source": "https://github.com/TheBlondBot/blond-bot-skills"}'
-```
-
-### Step 2: Install marketing skills
+### Import all skills from this repo
 
 ```bash
 curl -sS -X POST "$PAPERCLIP_API_URL/api/companies/$PAPERCLIP_COMPANY_ID/skills/import" \
   -H "Authorization: Bearer $PAPERCLIP_API_KEY" \
   -H "Content-Type: application/json" \
-  -d '{"source": "https://github.com/coreyhaines31/marketingskills"}'
+  -d '{"source": "https://github.com/Tien1112/blond-bot-skills"}'
 ```
 
-### Step 3: Install other external skills
+### Import a single skill
 
 ```bash
-for repo in \
-  "https://github.com/obra/superpowers" \
-  "https://github.com/vercel-labs/skills" \
-  "https://github.com/anthropics/skills" \
-  "https://github.com/googleworkspace/cli" \
-  "https://github.com/remotion-dev/skills" \
-  "https://github.com/vercel-labs/agent-skills"; do
-  curl -sS -X POST "$PAPERCLIP_API_URL/api/companies/$PAPERCLIP_COMPANY_ID/skills/import" \
-    -H "Authorization: Bearer $PAPERCLIP_API_KEY" \
-    -H "Content-Type: application/json" \
-    -d "{\"source\": \"$repo\"}"
-  echo " <- $repo"
-done
+curl -sS -X POST "$PAPERCLIP_API_URL/api/companies/$PAPERCLIP_COMPANY_ID/skills/import" \
+  -H "Authorization: Bearer $PAPERCLIP_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"source": "https://github.com/Tien1112/blond-bot-skills/tree/main/linkedin"}'
 ```
 
-### Step 4: Assign skills to agents
+### Assign skills to an agent
 
 ```bash
 curl -sS -X POST "$PAPERCLIP_API_URL/api/agents/<agent-id>/skills/sync" \
   -H "Authorization: Bearer $PAPERCLIP_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"desiredSkills": ["ai-humanization-skill", "the-blond-bot-voice", "linkedin"]}'
-```
-
-### Import a single skill from this repo
-
-```bash
-curl -sS -X POST "$PAPERCLIP_API_URL/api/companies/$PAPERCLIP_COMPANY_ID/skills/import" \
-  -H "Authorization: Bearer $PAPERCLIP_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{"source": "https://github.com/TheBlondBot/blond-bot-skills/tree/main/linkedin"}'
 ```
 
 ## Updating skills
